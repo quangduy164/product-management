@@ -46,7 +46,7 @@ class FormFieldModel{
 
   factory FormFieldModel.fromJs(Map<String, dynamic> json){
     return FormFieldModel(
-        label: json["lable"],
+        label: json["label"],
         name: json["name"],
         type: json["type"],
         required: json["required"] ?? false,

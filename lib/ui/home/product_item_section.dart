@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:product_management/data/models/product.dart';
 
@@ -7,33 +6,72 @@ class ProductItemSection extends StatelessWidget {
 
   const ProductItemSection({super.key, required this.product});
 
+  bool isValidUrl(String url) {
+    final uri = Uri.tryParse(url);
+    return uri != null && uri.hasAbsolutePath;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-      leading: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: FadeInImage.assetNetwork(
-          placeholder: 'assets/images/defaultproduct.png',
-          image: product.imageUrl,
-          width: 48,
-          height: 48,
-          fit: BoxFit.cover,
-          imageErrorBuilder: (context, error, stackTrace) {
-            return Image.asset(
-              'assets/images/defaultproduct.png',
-              width: 48,
-              height: 48,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: isValidUrl(product.imageUrl)
+                ? Image.network(
+              product.imageUrl,
+              width: 80,
+              height: 80,
               fit: BoxFit.cover,
-            );
-          },
-        ),
+              errorBuilder: (context, error, stackTrace) {
+                debugPrint("Lỗi tải ảnh: $error");
+                return Image.asset(
+                  'assets/images/defaultproduct.png',
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                );
+              },
+            )
+                : Image.asset(
+              'assets/images/defaultproduct.png',
+              width: 80,
+              height: 80,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(width: 30), // Khoảng cách giữa ảnh và chữ
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start, // Căn chữ sang trái
+                  children: [
+                    Text(
+                      product.name,
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '${product.price} VNĐ',
+                      style: const TextStyle(color: Colors.redAccent, fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                IconButton(
+                  icon: const Icon(Icons.more_vert),
+                  onPressed: () {  },
+
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
-      title: Text(product.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-      subtitle: Text('${product.price} VND', style: const TextStyle(color: Colors.green)),
-      onTap: () {
-        // TODO: Xử lý khi nhấn vào sản phẩm (ví dụ: điều hướng đến chi tiết sản phẩm)
-      },
     );
   }
 }

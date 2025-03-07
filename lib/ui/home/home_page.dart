@@ -15,10 +15,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>{
   final List<Widget> _tabs = [
     const ProductTab(),
-    AddProductTab()
+    const AddProductTab()
   ];
   @override
   Widget build(BuildContext context) {
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;//Kiểm tra chiều cao bàn phím
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(
         middle: Text('Quản lý sản phẩm'),
@@ -30,7 +31,9 @@ class _HomePageState extends State<HomePage>{
               items: const[
                 BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Trang chủ'),
                 BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Thêm sản phẩm')
-              ]),
+              ],
+            height: bottomInset > 0 ? 0 : kBottomNavigationBarHeight,//Nếu bàn phím xuất hiện thì ẩn tabbottom
+          ),
           tabBuilder: (BuildContext context, int index){
             return _tabs[index];
           },
