@@ -8,12 +8,13 @@
 
 ## Demo
 - Show product list
-  ![Product Management](./assets/images/demo/product_list1.jpg)
+  <img src="./assets/images/demo/product_list1.jpg" alt="Product Management" width="300"/>
 - Create product
-  ![Product Management](./assets/images/demo/add_product.jpg)
-  ![Product Management](./assets/images/demo/product_list2.jpg)
+  <img src="./assets/images/demo/add_product.jpg" alt="Product Management" width="300"/>
+  <img src="./assets/images/demo/product_list2.jpg" alt="Product Management" width="300"/>
 - Search products by name
-  ![Product Management](./assets/images/demo/search_product.jpg)
+  <img src="./assets/images/demo/search_product.jpg" alt="Product Management" width="300"/>
+
 
 ## Build with
 - Frontend: Flutter, Dart
