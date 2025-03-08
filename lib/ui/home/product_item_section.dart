@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:product_management/data/blocs/product_bloc.dart';
+import 'package:product_management/data/events/product_event.dart';
 import 'package:product_management/data/models/product.dart';
 
 class ProductItemSection extends StatelessWidget {
@@ -6,72 +9,82 @@ class ProductItemSection extends StatelessWidget {
 
   const ProductItemSection({super.key, required this.product});
 
-  bool isValidUrl(String url) {
-    final uri = Uri.tryParse(url);
-    return uri != null && uri.hasAbsolutePath;
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: isValidUrl(product.imageUrl)
-                ? Image.network(
-              product.imageUrl,
-              width: 80,
-              height: 80,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                debugPrint("Lỗi tải ảnh: $error");
-                return Image.asset(
-                  'assets/images/defaultproduct.png',
-                  width: 80,
-                  height: 80,
-                  fit: BoxFit.cover,
-                );
-              },
-            )
-                : Image.asset(
+    return Card(
+      elevation: 3,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.zero,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            isValidUrl(product.imageUrl)
+            ? Image.network(
+          product.imageUrl,
+          height: 120,
+          width: double.infinity,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return Image.asset(
               'assets/images/defaultproduct.png',
-              width: 80,
-              height: 80,
+              height: 120,
+              width: double.infinity,
               fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(width: 30), // Khoảng cách giữa ảnh và chữ
-          Expanded(
-            child: Row(
+            );
+          },
+        )
+            : Image.asset(
+          'assets/images/defaultproduct.png',
+          height: 120,
+          width: double.infinity,
+          fit: BoxFit.cover,
+        ),
+            const SizedBox(height: 8),
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                const SizedBox(width:7,),
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start, // Căn chữ sang trái
                   children: [
                     Text(
                       product.name,
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       '${product.price} VNĐ',
-                      style: const TextStyle(color: Colors.redAccent, fontSize: 15, fontWeight: FontWeight.bold),
+                      style: const TextStyle(color: Colors.green, fontSize: 13, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
-                IconButton(
-                  icon: const Icon(Icons.more_vert),
-                  onPressed: () {  },
-
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red, size: 22,),
+                    onPressed: () {
+                      context.read<ProductBloc>().add(DeleteProduct(product: product));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Đã xóa sản phẩm")),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
-          ),
-        ],
+            const Spacer(),
+          ],
+        ),
       ),
     );
+  }
+
+  bool isValidUrl(String url) {
+    final uri = Uri.tryParse(url);
+    return uri != null && uri.hasAbsolutePath;
   }
 }

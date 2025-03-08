@@ -1,16 +1,20 @@
-# product_management
+## Product Management
 
-A new Flutter project.
+## Features
+- Show product list
+- Create product
+- Search products by name
+- Automation test validators
 
-## Getting Started
+## Demo
+- Show product list
+  ![Product Management](./assets/images/demo/product_list1.jpg)
+- Create product
+  ![Product Management](./assets/images/demo/add_product.jpg)
+  ![Product Management](./assets/images/demo/product_list2.jpg)
+- Search products by name
+  ![Product Management](./assets/images/demo/search_product.jpg)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Build with
+- Frontend: Flutter, Dart
+- API: <u>[Link](https://hiring-test.stag.tekoapis.net/api/products/management)</u>

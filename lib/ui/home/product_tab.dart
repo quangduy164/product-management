@@ -54,17 +54,18 @@ class _ProductTabState extends State<ProductTab> {
                       },
                       child: filteredProducts.isEmpty
                           ? const Center(child: Text("Không tìm thấy sản phẩm"))
-                          : ListView.separated(
+                          :  GridView.builder(
+                        padding: const EdgeInsets.all(12),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2, // 2 cột
+                          crossAxisSpacing: 12, // Khoảng cách ngang giữa các cột
+                          mainAxisSpacing: 12, // Khoảng cách dọc giữa các hàng
+                          childAspectRatio: 0.8, // Tỉ lệ chiều rộng / chiều cao của mỗi item
+                        ),
                         itemCount: filteredProducts.length,
                         itemBuilder: (context, index) {
                           return ProductItemSection(product: filteredProducts[index]);
                         },
-                        separatorBuilder: (context, index) => const Divider(
-                          color: Colors.grey,
-                          thickness: 1,
-                          indent: 24,
-                          endIndent: 24,
-                        ),
                       ),
                     );
                   } else if (state is ProductError) {

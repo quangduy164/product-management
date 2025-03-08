@@ -18,10 +18,10 @@ class Validators {
 
       int number = int.parse(value);
       if (minValue != null && number < minValue) {
-        return "$label phải lớn hơn hoặc bằng $minValue";
+        return "$label phải lớn hơn $minValue";
       }
       if (maxValue != null && number > maxValue) {
-        return "$label phải nhỏ hơn hoặc bằng $maxValue";
+        return "$label phải nhỏ hơn $maxValue";
       }
     }
 
